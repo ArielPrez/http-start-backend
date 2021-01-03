@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +37,22 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts() {
-    this.http.get('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json').subscribe(
+    this.http
+    .get('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json')
+    .pipe(
+      map(
+        (arrayData) => {
+          const postsArray = [];
+          for (const key in arrayData) {
+            if (arrayData.hasOwnProperty(key)) {
+              postsArray.push({...arrayData[key], id: key});
+            }
+          }
+          return postsArray;
+        }
+      )
+    )
+    .subscribe(
       (posts) => {
         console.log(posts);
       }
