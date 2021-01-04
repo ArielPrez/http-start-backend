@@ -38,4 +38,9 @@ export class PostsService {
       )
     );
   }
+
+  deletePosts() {
+    return this.http
+    .delete('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json');
+  }
 }
