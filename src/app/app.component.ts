@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Post } from './post.model';
 import { PostsService } from './posts.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   loadedPosts: Post[] = [];
   isFetching = false;
-  errors: any[] = [''];
+  error = '';
+  private errorSub: Subscription;
 
   constructor(private http: HttpClient,
               private postServ: PostsService) {}
 
   ngOnInit() {
+    this.errorSub = this.postServ.errorSubj.subscribe(
+      (errorMessage) => {
+        this.error = errorMessage;
+      }
+    );
     this.onFetchPosts();
   }
 
@@ -31,16 +38,13 @@ export class AppComponent implements OnInit {
     this.postServ.fetchPosts().subscribe(
       (posts: Post[]) => {
         this.isFetching = false;
-        this.errors = [];
+        this.error = '';
         this.loadedPosts = posts;
       },
       error => {
         // All these are error from the FireBase API,
         // In others API it might vary the structure.
-        this.errors[0] = error.error.error;
-        this.errors[1] = 'Message: ' + error.message;
-        this.errors[2] = 'Status: ' + error.status;
-        // console.log(this.errors);
+        // this.error = error.error.error;
       }
     );
   }
@@ -53,5 +57,10 @@ export class AppComponent implements OnInit {
       }
     );
   }
+
+  ngOnDestroy() {
+    this.errorSub.unsubscribe();
+  }
+
 
 }
