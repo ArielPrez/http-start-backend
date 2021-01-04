@@ -68,15 +68,16 @@
           </p>
         </li>
       </ul>
-      <h3 *ngIf="isFetching && !error"
+      <h3 *ngIf="isFetching && error === '' "
         style="color: crimson;
               background-color: rgb(218, 200, 178);
               padding: 5%;
               text-align: center;">
         Loading...</h3>
-      <div class="alert alert-danger" *ngIf="error">
+      <div class="alert alert-danger" *ngIf="errors.length">
         <h3>An Error Ocurred!</h3>
-        <p> {{ error }} </p>
+        <p *ngFor="let e of errors"
+        > {{ e }} </p>
       </div>
     </div>
   </div>

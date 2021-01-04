@@ -11,7 +11,7 @@ import { PostsService } from './posts.service';
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isFetching = false;
-  error = null;
+  errors: any[] = [''];
 
   constructor(private http: HttpClient,
               private postServ: PostsService) {}
@@ -34,8 +34,12 @@ export class AppComponent implements OnInit {
         this.loadedPosts = posts;
       },
       error => {
-        this.error = error.error.error;
-        console.log(error);
+        // All these are error from the FireBase API,
+        // In others API it might vary the structure.
+        this.errors[0] = error.error.error;
+        this.errors[1] = 'Message: ' + error.message;
+        this.errors[2] = 'Status: ' + error.status;
+        // console.log(this.errors);
       }
     );
   }
