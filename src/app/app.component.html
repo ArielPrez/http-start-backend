@@ -68,7 +68,7 @@
           </p>
         </li>
       </ul>
-      <h3 *ngIf="isFetching && error === '' "
+      <h3 *ngIf="isFetching && !errors.length"
         style="color: crimson;
               background-color: rgb(218, 200, 178);
               padding: 5%;

@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     this.postServ.fetchPosts().subscribe(
       (posts: Post[]) => {
         this.isFetching = false;
+        this.errors = [];
         this.loadedPosts = posts;
       },
       error => {
