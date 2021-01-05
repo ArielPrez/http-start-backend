@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from './post.model';
 import { map, catchError } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
@@ -28,8 +28,11 @@ export class PostsService {
 
   fetchPosts() {
     return this.http
-    .get('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json')
-    .pipe(
+    .get('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json',
+        {
+          headers: new HttpHeaders({'Custom-Header':'Hello!!!'})
+        }
+    ).pipe(
       map(
         (arrayData: {[key: string]: Post }) => {
           const postsArray: Post[] = [];
