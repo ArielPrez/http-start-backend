@@ -38,16 +38,11 @@ export class PostsService {
               postsArray.push({ ...arrayData[key], id: key});
             }
           }
-
-          // Just to demonstrate the example.
-          postsArray.forEach.push();
-
           return postsArray;
         }
       ),
       catchError((errorRes) => {
         // Send to analytics server
-        console.log(errorRes + '  ====> ERROR!')
         return throwError(errorRes);
       })
     );

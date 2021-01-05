@@ -44,7 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
       error => {
         // All these are error from the FireBase API,
         // In others API it might vary the structure.
-        // this.error = error.error.error;
+        this.isFetching = false;
+        this.error = error.error.error;
       }
     );
   }
@@ -56,6 +57,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadedPosts = [];
       }
     );
+  }
+
+  onHandleError() {
+    this.error = '';
   }
 
   ngOnDestroy() {
