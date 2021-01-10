@@ -49,6 +49,7 @@ export class PostsService {
               postsArray.push({ ...arrayData[key], id: key});
             }
           }
+          console.log(postsArray);
           return postsArray;
         }
       ),
