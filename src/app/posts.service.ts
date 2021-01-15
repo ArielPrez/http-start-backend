@@ -15,7 +15,7 @@ export class PostsService {
   createAndStorePost(title: string, content: string) {
     const postData: Post = {title, content};
     this.http.post<{ name: string }>(
-      'https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json',
+      'https://start-backend-test-default-rtdb.firebaseio.com/posts.json',
       postData,
       {
         observe: 'response'
@@ -35,7 +35,7 @@ export class PostsService {
     searchParams = searchParams.append('print', 'pretty');
     searchParams = searchParams.append('custom', 'key');
     return this.http
-    .get('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json',
+    .get('https://start-backend-test-default-rtdb.firebaseio.com/posts.json',
         {
           headers: new HttpHeaders({'Custom-Header':'Hello!!!'}),
           params: searchParams,
@@ -63,7 +63,7 @@ export class PostsService {
 
   deletePosts() {
     return this.http
-    .delete('https://recipestore-2020ap-default-rtdb.firebaseio.com/posts.json',
+    .delete('https://start-backend-test-default-rtdb.firebaseio.com/posts.json',
     {
       observe: 'events',
       responseType: 'json'
